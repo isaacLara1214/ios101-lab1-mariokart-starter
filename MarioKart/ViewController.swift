@@ -35,7 +35,7 @@ class ViewController: UIViewController,
   @IBAction func didDoubleTapKart(_ sender: UITapGestureRecognizer) {
     // Exercise 1: Move the kart forward past the edge of the screen
     // Tip: Use the `translate` function below
-    // YOUR CODE HERE
+      translate(kart: sender.view, by: view.frame.width)
     
     // Exercise 6: Move the kart back to its original position after you've moved it off the screen
     // Tip: Change your usage of the `translate` function to
@@ -59,7 +59,7 @@ class ViewController: UIViewController,
   @IBAction func didRotateKart(_ sender: UIRotationGestureRecognizer) {
     // Exercise 2: Rotate the kart
     // Tip: Use the `rotate` function below
-    // YOUR CODE HERE
+      rotate(kart: sender.view, gestureRecognizer: sender)
   }
   
   private func rotate(kart: UIView?,
@@ -73,7 +73,7 @@ class ViewController: UIViewController,
   @IBAction func didPinchKart(_ sender: UIPinchGestureRecognizer) {
     // Exercise 3: Change the scale of the kart
     // Tip: Use the `scale` function below
-    // YOUR CODE HERE
+      scale(kart: sender.view, gestureRecognizer: sender)
   }
   
   private func scale(kart: UIView?,
@@ -92,7 +92,9 @@ class ViewController: UIViewController,
   // Exercise 4: Implement the `moveKart` function to move the kart based on the
   // location of the location of the gesture in the view
   private func moveKart(using gestureRecognizer: UIPanGestureRecognizer) {
-    // YOUR CODE HERE
+      let location = gestureRecognizer.location(in: view)
+      let kartView = gestureRecognizer.view!
+      kartView.center = location
   }
   
   @IBAction func didLongPressBackground(_ sender: UILongPressGestureRecognizer) {
@@ -103,7 +105,15 @@ class ViewController: UIViewController,
   
   // Exercise 5: Implement `resetKarts` to reset the size and positioning of the karts
   private func resetKarts() {
-    // YOUR CODE HERE
+      UIView.animate(withDuration: 0.4){
+          self.kartView0.transform = .identity
+          self.kartView1.transform = .identity
+          self.kartView2.transform = .identity
+          
+          self.kartView0.center = self.originalKartCenters[0]
+          self.kartView1.center = self.originalKartCenters[1]
+          self.kartView2.center = self.originalKartCenters[2]
+      }
   }
   
   // Called whenever the view becomes visible on the screen
